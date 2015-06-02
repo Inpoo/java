@@ -13,27 +13,25 @@ import javax.persistence.Table;
 @Table(name="t_login")
 public class Login {
 	private int userId;
-	private int nickName;
-	private int userPassword;
-	@Column(name="user_id")
+	private String nickName;
+	private String password;
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	@Column(name="user_name")
-	public int getNickName() {
+	public String getNickName() {
 		return nickName;
 	}
-	public void setNickName(int nickName) {
+	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	@Column(name="user_password")
-	public int getUserPassword() {
-		return userPassword;
+	public String getPassword() {
+		return password;
 	}
-	public void setUserPassword(int userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+	
 }
