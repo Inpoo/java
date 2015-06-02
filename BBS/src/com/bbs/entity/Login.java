@@ -1,20 +1,20 @@
 package com.bbs.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 /**
- * 用户登录实体
- * @author Zhao Yundi
- * @date 2015年6月1日 下午8:40:50
+ * 
+ * @author admin
+ * 2015-6-2
  */
-
 @Entity
 @Table(name="t_login")
 public class Login {
 	private int userId;
 	private String nickName;
 	private String password;
+	@Id
 	public int getUserId() {
 		return userId;
 	}
@@ -33,5 +33,4 @@ public class Login {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 }
