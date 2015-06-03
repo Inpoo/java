@@ -9,17 +9,21 @@
 <link href="css/style.css" rel="stylesheet" />
 <script type="text/javascript">
 function logout() {
-	if (confirm("您确定要退出系统吗？")) {
+	//if (confirm("您确定要退出系统吗？")) {
 		window.location.href="User_logout.action";
-	}
+	//}
 }
-function login(){
-	var curPage=window.location.href;
+function login(url){
+	var curPage;
+	if(url != "User_userCenter.action"){
+		curPage=window.location.href;
+		}else curPage = url;
 	window.location.href="login.jsp?prePage="+curPage;
 }
 function checkUserLogin(){
 	if ('${currentUser.nickName}'==null||'${currentUser.nickName}'=="") {
-		alert("您还未登陆！");
+		alert("请先登录！");
+		login("User_userCenter.action");
 	} else {
 		window.location.href="User_userCenter.action";
 	}
@@ -28,14 +32,13 @@ function checkUserLogin(){
 </head>
 <body>
 <div>
-	<div id="header-wrapper">
+	<!--  <div id="header-wrapper">
 		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="#">Java1234论坛</a></h1>
-				<p> <a href="http://www.java1234.com/" rel="nofollow">Java1234知识分享网</a></p>
-			</div>
+			<div id="logo"></div>
+			<p class="logo-font">论坛</p>
 		</div>
 	</div>
+	-->
 	<div id="menu-wrapper">
 		<div id="menu" class="container">
 			<ul>
@@ -47,13 +50,12 @@ function checkUserLogin(){
 			</ul>
 		</div>
 		<!-- end #menu --> 
-	</div>
-<div style="margin: 0 auto;" align="right">
+		<div class="menu-user">
 		<c:choose>
 			<c:when test="${not empty currentUser }">
-				当前用户：<a href="#">${currentUser.nickName }</a>&nbsp;『<c:choose>
+				当前用户：<a href="#">${currentUser.nickName }</a>&nbsp;<c:choose>
 					                  	  		<c:when test="${currentUser.sectionList.size()==0&&currentUser.type!=2 }">
-					                  	  			<font style="color: black;">普通用户</font>	
+					                  	  			<font style="color: black;"><!-- 普通用户 --></font>	
 					                  	  		</c:when>
 					                  	  		<c:when test="${currentUser.sectionList.size()!=0&&currentUser.type!=2 }">
 					                  	  			<font style="color: blue;">版主</font>
@@ -61,9 +63,8 @@ function checkUserLogin(){
 					                  	  		<c:otherwise>
 					                  	  			<font style="color: red;">管理员</font>
 					                  	  		</c:otherwise>
-					                  	  	</c:choose>』|
+					                  	  	</c:choose>|
 				<a href="javascript:logout()">注销</a>|
-				<a href="register.jsp">注册</a>|
 				<a href="javascript:checkUserLogin()">个人中心</a>
 			</c:when>
 			<c:otherwise>
@@ -74,6 +75,8 @@ function checkUserLogin(){
 			</c:otherwise>
 		</c:choose>
 	</div>
+	</div>
+
 </div>
 </body>
 </html>

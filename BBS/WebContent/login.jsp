@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>用户登录</title>
 <style type="text/css">
 html{overflow-y:scroll;vertical-align:baseline;}
 body{font-family:Microsoft YaHei,Segoe UI,Tahoma,Arial,Verdana,sans-serif;font-size:12px;color:#fff;height:100%;line-height:1;background:#999}
@@ -89,7 +89,7 @@ function checkForm(){
 </head>
 <body>
 <div class="login-box">
-	<h1>java12134论坛登录</h1>
+	<h1>论坛登录</h1>
 	<form method="post" action="User_login.action" onsubmit="return checkForm()">
 		<table>
 			<tr class="name">
