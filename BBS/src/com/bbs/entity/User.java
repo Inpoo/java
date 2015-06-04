@@ -31,6 +31,8 @@ public class User {
 	private String email;		//用户邮箱
 	private String mobile;		//联系电话
 	private int type;			//用户类型	1为其他用户；2管理员
+	private int experience;
+	private int gold;
 	private List<Section> sectionList=new ArrayList<Section>();
 	private List<Topic> topicList=new ArrayList<Topic>();
 	private List<Reply> replyList=new ArrayList<Reply>();
@@ -107,6 +109,19 @@ public class User {
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+	public int getExperience() {
+		return experience;
+	}
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+	public int getGold() {
+		return gold;
+	}
+	public void setGold(int gold) {
+		this.gold = gold;
 	}
 	/*@OneToMany(mappedBy="master")*/
 	/*@OneToMany(targetEntity=Section.class,cascade=CascadeType.ALL)*/

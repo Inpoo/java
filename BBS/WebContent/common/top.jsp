@@ -53,7 +53,7 @@ function checkUserLogin(){
 		<div class="menu-user">
 		<c:choose>
 			<c:when test="${not empty currentUser }">
-				当前用户：<a href="#">${currentUser.nickName }</a>&nbsp;<c:choose>
+				当前用户：<a href="javascript:checkUserLogin()">${currentUser.nickName }</a>&nbsp;<c:choose>
 					                  	  		<c:when test="${currentUser.sectionList.size()==0&&currentUser.type!=2 }">
 					                  	  			<font style="color: black;"><!-- 普通用户 --></font>	
 					                  	  		</c:when>
@@ -65,13 +65,12 @@ function checkUserLogin(){
 					                  	  		</c:otherwise>
 					                  	  	</c:choose>|
 				<a href="javascript:logout()">注销</a>|
-				<a href="javascript:checkUserLogin()">个人中心</a>
+				
 			</c:when>
 			<c:otherwise>
 				<!-- <a href="login.jsp">登录</a>| -->
 				<a href="javascript:login()">登录</a>|
 				<a href="register.jsp">注册</a>|
-				<a href="javascript:checkUserLogin()">个人中心</a>
 			</c:otherwise>
 		</c:choose>
 	</div>

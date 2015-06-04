@@ -24,11 +24,17 @@ import com.bbs.entity.User;
 import com.bbs.service.ReplyService;
 import com.bbs.service.SectionService;
 import com.bbs.service.TopicService;
+import com.bbs.service.UserService;
+import com.bbs.util.ConstantConfiguration;
 import com.bbs.util.PageUtil;
 import com.bbs.util.ResponseUtil;
 import com.bbs.util.StringUtil;
 import com.opensymphony.xwork2.ActionSupport;
-
+/**
+ * 主题Action
+ * @author Zhao Yundi
+ * @date 2015年6月4日 下午8:53:17
+ */
 @Controller
 public class TopicAction extends ActionSupport implements ServletRequestAware{
 
@@ -38,6 +44,8 @@ public class TopicAction extends ActionSupport implements ServletRequestAware{
 	private static final long serialVersionUID = 1L;
 	
 	private HttpServletRequest request;
+	@Resource
+	private UserService userService;
 	
 	@Resource
 	private TopicService topicService;
@@ -290,8 +298,18 @@ public class TopicAction extends ActionSupport implements ServletRequestAware{
 		sectionList=sectionService.findSectionList(null, null);
 		return "preSave";
 	}
-	
+	/**
+	 * 保存用户发表的帖子
+	 * modify by ZhaoYundi 发帖增加经验值
+	 * @return
+	 * @throws Exception
+	 */
 	public String save()throws Exception{
+		HttpSession session=request.getSession();
+		User currentUser=(User) session.getAttribute("currentUser");
+		currentUser.setExperience(currentUser.getExperience() + ConstantConfiguration.PUBLISHT_TOPIC);
+		userService.saveUser(currentUser);//保存到db
+		session.setAttribute("currentUser", currentUser);//保存到session
 		topic.setPublishTime(new Date());
 		topic.setModifyTime(new Date());
 		topicService.saveTopic(topic);
