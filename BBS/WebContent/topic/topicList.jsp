@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -62,7 +62,29 @@ function saveTopic(){
 		}
 	},"json");
 }
+function manageMode(){
+	
+	var mode = document.getElementById("mode").innerHTML;
+
+	//进入高级模式，显示修改删除按钮
+	if(mode=="高级模式"){
+	//改变文字
+	document.getElementById("mode").innerHTML = "普通模式"
+
+	}else if(mode=="普通模式"){
+	document.getElementById("mode").innerHTML = "高级模式"
+
+	}
+	alert(mode);
+}
 </script>
+<style type="text/css">
+.topic-list tr:nth-child(2n){
+	background:#FFE1FF;
+}
+
+
+</style>
 </head>
 <body>
 <div id="header" class="wrap" style="width: 1200px; margin: 0 auto;">
@@ -88,12 +110,12 @@ function saveTopic(){
 		</tr> -->
 		<tr>
 			<td>
-				<table class="table table-bordered" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 8;">
+				<table class="topic-list" border="0"  width="100%"  cellspacing="0" cellpadding="0" style="margin-top: 8;">
 					<tr>
 						<th style="text-align: center;vertical-align: middle; width: 150px;">
-							状态
+							<!--  状态-->
 						</th>
-						<th style="text-align: center;vertical-align: middle;">
+						<th style="text-align: left;vertical-align: middle;">
 							帖子标题
 						</th>
 						<th style="text-align: center;vertical-align: middle; width: 100px;">
@@ -111,21 +133,24 @@ function saveTopic(){
 					</tr>
 					<c:forEach items="${zdTopicList }" var="topic">
 						<tr>
-							<td style="text-align: center;vertical-align:middle;">
-								<c:choose>
-									<c:when test="${topic.good==0 }">
-										<span style="color: blue;">【普通】</span>
-									</c:when>
-									<c:otherwise>
-										<span style="color: red;">【精华】</span>
-									</c:otherwise>
-								</c:choose>
-								<c:choose>
-									<c:when test="${topic.top==1 }">【置顶】</c:when>
+							<td style="text-align: right;vertical-align:middle;">
+							
+								
+							</td>
+							<td style="text-align: left;vertical-align:middle;">
+							<span><c:choose>
+									<c:when test="${topic.top==1 }"><img alt="置顶帖" src="images/zding.gif"></c:when>
 									<c:otherwise></c:otherwise>
 								</c:choose>
-							</td>
-							<td style="text-align: center;vertical-align:middle;">
+								<c:choose>
+									<c:when test="${topic.good==0 }">
+										<!--  <span style="color: blue;">【普通】</span>-->
+									</c:when>
+									<c:otherwise>
+										
+										<img alt="精华帖" src="images/jing.gif">
+									</c:otherwise>
+								</c:choose></span>
 								<a href="Topic_details.action?topicId=${topic.id }">${topic.title }</a>
 							</td>
 							<td style="text-align: center;vertical-align:middle;">
@@ -138,10 +163,11 @@ function saveTopic(){
 								<strong>${topicLastReply.get(topic).user.nickName }</strong><br>
 								${topicLastReply.get(topic).publishTime }
 							</td>
-							<td style="text-align: center;vertical-align:middle;">
+							<td class="manager-mode" style="text-align: center;vertical-align:middle;">
 								<c:choose>
 									<c:when test="${currentUser.id==topic.user.id&&currentUser.id!=section.master.id }">
 										<button class="btn btn-info" data-backdrop="static" onclick="#">修改</button>
+										<button class="btn btn-danger" onclick="javascript:deleteTopic(${topic.id })">删除</button>
 									</c:when>
 									<c:when test="${currentUser.id==section.master.id }">
 										<button class="btn btn-info" type="button" data-backdrop="static" data-toggle="modal" data-target="#dlg" onclick="return modifyTopic(${topic.id },${topic.top },${topic.good })">修改</button>
@@ -151,9 +177,7 @@ function saveTopic(){
 										<button class="btn btn-info" data-backdrop="static" data-toggle="modal" data-target="#dlg" onclick="return modifyTopic(${topic.id },${topic.top },${topic.good })">修改</button>
 										<button class="btn btn-danger" onclick="javascript:deleteTopic(${topic.id })">删除</button>
 									</c:when>
-									<c:otherwise>
-										您无权对本贴进行操作
-									</c:otherwise>
+									
 								</c:choose>
 							</td>
 						</tr>
@@ -169,7 +193,7 @@ function saveTopic(){
 		
 		<tr>
 			<td>
-				<table class="table table-bordered" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 8;">
+				<table class="topic-list" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 8;">
 					<!-- <tr>
 						<th style="text-align: center;vertical-align: middle; width: 150px;">
 							状态
@@ -192,21 +216,25 @@ function saveTopic(){
 					</tr> -->
 					<c:forEach items="${ptTopicList }" var="topic">
 						<tr>
-							<td style="text-align: center;vertical-align:middle;width: 150px;">
-								<c:choose>
+							<td style="text-align: right;vertical-align:middle;width: 150px;">
+								
+							</td>
+							<td style="text-align: left;vertical-align:middle;">
+							<span><c:choose>
 									<c:when test="${topic.good==0 }">
-										<span style="color: blue;">【普通】</span>
+										<!--  <span style="color: blue;">【普通】</span>-->
+										
 									</c:when>
 									<c:otherwise>
-										<span style="color: red;">【精华】</span>
+								
+										<img alt="精华帖" src="images/jing.gif">
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
-									<c:when test="${topic.top==1 }">【置顶】</c:when>
+									<c:when test="${topic.top==1 }">
+									<img alt="置顶帖" src="images/zding.gif"></c:when>
 									<c:otherwise></c:otherwise>
-								</c:choose>
-							</td>
-							<td style="text-align: center;vertical-align:middle;">
+								</c:choose></span>
 								<a href="Topic_details.action?topicId=${topic.id}">${topic.title }</a>
 							</td>
 							<td style="text-align: center;vertical-align:middle;width: 100px;">
@@ -219,10 +247,11 @@ function saveTopic(){
 								<strong>${topicLastReply.get(topic).user.nickName }</strong><br>
 								${topicLastReply.get(topic).publishTime }
 							</td>
-							<td style="text-align: center;vertical-align:middle;width: 150px;">
+							<td class="manager-mode" style="text-align: center;vertical-align:middle;width: 150px;">
 								<c:choose>
 									<c:when test="${currentUser.id==topic.user.id&&currentUser.id!=section.master.id }">
 										<button class="btn btn-info" data-backdrop="static" onclick="#">修改</button>
+										<button class="btn btn-danger" onclick="javascript:deleteTopic(${topic.id })">删除</button>
 									</c:when>
 									<c:when test="${currentUser.id==section.master.id }">
 										<button class="btn btn-info" data-backdrop="static" data-toggle="modal" data-target="#dlg" onclick="return modifyTopic(${topic.id },${topic.top },${topic.good })">修改</button>
@@ -232,9 +261,7 @@ function saveTopic(){
 										<button class="btn btn-info" data-backdrop="static" data-toggle="modal" data-target="#dlg" onclick="return modifyTopic(${topic.id },${topic.top },${topic.good })">修改</button>
 										<button class="btn btn-danger" onclick="javascript:deleteTopic(${topic.id })">删除</button>
 									</c:when>
-									<c:otherwise>
-										您无权对本贴进行操作
-									</c:otherwise>
+									
 								</c:choose>
 							</td>
 						</tr>
@@ -243,7 +270,9 @@ function saveTopic(){
 			</td>
 		</tr>
 	</table>
+	<a onclick="manageMode()" style="float:right; border:1px solid #dbdbdb; color:#000;"><div style="background:url(images/icon_setting.png); width:20px; height:20px; position:absolute;display:inline;"></div><span id="mode" style="margin-left:20px; font-size:15px;">高级模式</span></a>
 </div>
+
 <div id="dlg" class="modal hide fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"

@@ -19,4 +19,6 @@ public class ConstantConfiguration {
 	public static final int PUBLISHT_TOPIC = 5;//发表主题
 	public static final int PUBLISHT_REPLY = 1;//发表回复
 	public static final int TOPIC_REPLY = 1;//发表的主题被回复
+	//pageSize
+	public static final int TOPIC_LIST_PAGESIZE = 5;//主题列表每页显示条数
 }

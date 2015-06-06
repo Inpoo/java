@@ -328,7 +328,12 @@ public class TopicAction extends ActionSupport implements ServletRequestAware{
 		ResponseUtil.write(ServletActionContext.getResponse(), result);
 		return SUCCESS;
 	}
-	
+	/**
+	 * 
+	 * 主题列表
+	 * @return
+	 * @throws Exception
+	 */
 	public String list()throws Exception{
 		HttpSession session=request.getSession();
 		if (curSection==null) {
@@ -353,7 +358,8 @@ public class TopicAction extends ActionSupport implements ServletRequestAware{
 		if (StringUtil.isEmpty(page)) {
 			page="1";
 		}
-		PageBean pageBean=new PageBean(Integer.parseInt(page),3);
+		//分页
+		PageBean pageBean=new PageBean(Integer.parseInt(page),ConstantConfiguration.TOPIC_LIST_PAGESIZE);
 		ptTopicList=topicService.findPtTopicListBySectionId(curSection.getId(), pageBean);
 		long total=topicService.getPtTopicCountBySectionId(curSection.getId());
 		pageCode=PageUtil.genPagination(request.getContextPath()+"/Topic_list.action", total, Integer.parseInt(page), 3,null);
